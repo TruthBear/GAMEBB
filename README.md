@@ -1,6 +1,6 @@
 # 디자인 시안
 
-Figma 주소: https://url.kr/vy4ej6
+[Figma](https://www.figma.com/file/PQEPO5bJ73EqJGlrlXF6gs/%EC%98%A4%ED%94%88-API-%ED%99%9C%EC%9A%A9%ED%95%9C--%EB%B0%98%EC%9D%91%ED%98%95-%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%9B%B9?type=design&node-id=0%3A1&mode=design&t=hgGYTGxeHT9jwnp7-1)
 
 # 네트리파이 주소
 
