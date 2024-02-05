@@ -1,3 +1,11 @@
+# Figma 주소
+
+https://url.kr/vy4ej6
+
+# 네트리파이 주소
+
+https://aquamarine-capybara-d299ad.netlify.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
