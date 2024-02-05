@@ -1,6 +1,6 @@
-# Figma 주소
+# 디자인 시안
 
-https://url.kr/vy4ej6
+Figma 주소: https://url.kr/vy4ej6
 
 # 네트리파이 주소
 
