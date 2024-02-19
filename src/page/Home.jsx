@@ -1,6 +1,10 @@
 import React from 'react'
 
+
+
 const HomePage = () => {
+  
+  
   return (
     <div>홈입니다.</div>
   )
