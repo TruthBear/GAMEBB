@@ -25,11 +25,12 @@ const GameCard = ({background, name, platforms, rating, released, genres}) => {
 
   
   return (
-    <article className=' w-full overflow-hidden rounded-xl shadow-xl'>
-      <div className='w-full'>
-        <img src={background} alt={`${name} preview`} />
+    <article className=' w-full overflow-hidden rounded-xl shadow-xl bg-[#151515]'>
+      <div className='w-full '>
+        {background === null ? "" : <img src={background} alt={`${name} preview`} />}
+        
       </div>
-      <div className='bg-[#151515] text-white w-full p-5 space-y-1 flex flex-col'>
+      <div className=' text-white w-full p-5 space-y-1 flex flex-col'>
         <PlatformIcon platforms={platforms} />
         <h3 className='text-2xl font-bold'>{name} <RatingIcon rating={rating}/></h3>
         {

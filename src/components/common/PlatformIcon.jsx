@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaWindows, FaXbox, FaPlaystation, FaLinux, FaApple } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
+import { SiMacos } from "react-icons/si";
 import { DiAndroid } from "react-icons/di";
 
 
@@ -19,6 +20,8 @@ const PlatformIcon = (platforms) => {
     } else if(platform === 'linux') {
       return <FaLinux />
     } else if(platform ==='mac') {
+      return <SiMacos />
+    } else if(platform ==='ios') {
       return <FaApple />
     } else if(platform ==='nintendo') {
       return <BsNintendoSwitch />

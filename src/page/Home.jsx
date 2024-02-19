@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import GameCard from '../components/common/GameCard';
+import { useInView } from 'react-intersection-observer';
 
 
 const HomePage = () => {
   
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState([]);  
+  const [page, setPage] = useState(1);
+  
+  const [ref, inView] = useInView();
 
   useEffect(() => {
     const fetchGames = async () => {
-      const apiKey = '8002a31aaf4147db8fce8bc551b606fd'; // 여기에 실제 RAWG API 키를 입력하세요.
+      const apiKey = '8002a31aaf4147db8fce8bc551b606fd'; 
       const date = new Date();
       const currentDate = date.toISOString().split('T')[0];
       date.setMonth(date.getMonth() - 3);
       const threeMonthsAgo = date.toISOString().split('T')[0];
-      
-      const url = `https://api.rawg.io/api/games?key=${apiKey}&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page_size=20`;
+
+      const url = `https://api.rawg.io/api/games?key=${apiKey}&page_size=10&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page=${page}`;
 
       try {
         const response = await fetch(url);
@@ -22,22 +26,38 @@ const HomePage = () => {
           throw new Error('Something went wrong');
         }
         const data = await response.json();
-        setGames(data.results);
+        setGames([...games, ...data.results]);
+        setPage((page) => page + 1)
       } catch (error) {
         console.error('Failed to fetch games:', error);
       }
     };
 
+    // 최소 데이터 요청
     fetchGames();
-  }, []);
+
+
+    // 무한스크롤 요청
+    if(inView) {
+      fetchGames();
+    }
+  }, [inView]);
+
+
+  // <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+  
 
   return (
-    <section className='px-5 py-10'>
+    <section className='px-5 pb-10'>
       <div></div>
-      <ul className='space-y-5 flex flex-wrap'>
+      <ul className='space-y-5 flex flex-col'>
       {
         games.length === 0 
-        ? "Loading" 
+        ? <div className='space-y-5'>
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+        </div>
         : games?.map((item, index) => (
           <li key={index}>
             <GameCard 
@@ -49,8 +69,10 @@ const HomePage = () => {
               genres={item?.genres}
             />
             </li>
+            
         ))
       }
+      <div className='text-center' ref={ref}>무한스크롤 요청</div>
       </ul>
     </section>
   )
