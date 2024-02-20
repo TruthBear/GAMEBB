@@ -26,8 +26,8 @@ const HomePage = () => {
           throw new Error('Something went wrong');
         }
         const data = await response.json();
-        setGames([...games, ...data.results]);
-        setPage(page + 1)
+        setGames(g => [...g, ...data.results]);
+        setPage(p => p+1)
       } catch (error) {
         console.error('Failed to fetch games:', error);
       }
@@ -41,7 +41,7 @@ const HomePage = () => {
       fetchGames();
     }
 
-  }, [inView]);
+  }, [inView, page]);
 
 
   // <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
