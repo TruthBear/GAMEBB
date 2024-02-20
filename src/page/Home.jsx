@@ -12,13 +12,13 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchGames = async () => {
-      const apiKey = '8002a31aaf4147db8fce8bc551b606fd'; 
+      const apiKey = process.env.REACT_APP_API_KEY; 
       const date = new Date();
       const currentDate = date.toISOString().split('T')[0];
       date.setMonth(date.getMonth() - 3);
       const threeMonthsAgo = date.toISOString().split('T')[0];
 
-      const url = `https://api.rawg.io/api/games?key=${apiKey}&page_size=10&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page=${page}`;
+      const url = `https://api.rawg.io/api/games?key=${apiKey}&page_size=5&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page=${page}`;
 
       try {
         const response = await fetch(url);
@@ -27,20 +27,20 @@ const HomePage = () => {
         }
         const data = await response.json();
         setGames([...games, ...data.results]);
-        setPage((page) => page + 1)
+        setPage(page + 1)
       } catch (error) {
         console.error('Failed to fetch games:', error);
       }
     };
 
-    // 최소 데이터 요청
-    fetchGames();
-
+    // 최초 데이터 요청
+    // fetchGames();
 
     // 무한스크롤 요청
     if(inView) {
       fetchGames();
     }
+
   }, [inView]);
 
 
@@ -52,12 +52,13 @@ const HomePage = () => {
       <div></div>
       <ul className='space-y-5 flex flex-col'>
       {
-        games.length === 0 
-        ? <div className='space-y-5'>
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-        </div>
+        games.length === 0
+        ? <p className='text-center'>Loading...</p>
+        // ? <div className='space-y-5'>
+        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+        // </div>
         : games?.map((item, index) => (
           <li key={index}>
             <GameCard 
