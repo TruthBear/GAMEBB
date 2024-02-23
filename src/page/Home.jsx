@@ -5,10 +5,11 @@ import { useInView } from 'react-intersection-observer';
 
 const HomePage = () => {
   
-  const [games, setGames] = useState([]);  
+  const [games, setGames] = useState([]);
+  const [firstRun, setFirstRun] = useState(true);  
   const [page, setPage] = useState(1);
-  
-  const [ref, inView] = useInView();
+
+  const [bottom, bottomView] = useInView();
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -33,15 +34,20 @@ const HomePage = () => {
       }
     };
 
-    // 최초 데이터 요청
-    // fetchGames();
-
-    // 무한스크롤 요청
-    if(inView) {
+    if(firstRun === true) {
+      setFirstRun(!firstRun);
+      // 최초 데이터 요청
       fetchGames();
     }
 
-  }, [inView, page]);
+    // 무한스크롤 요청
+    if(bottomView) {
+      fetchGames();
+    }
+
+  }, [bottomView, page]);
+
+  console.log(games)
 
 
   // <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
@@ -53,12 +59,12 @@ const HomePage = () => {
       <ul className='space-y-5 flex flex-col'>
       {
         games.length === 0
-        ? <p className='text-center'>Loading...</p>
-        // ? <div className='space-y-5'>
-        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-        //   <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-        // </div>
+        // ? <p className='text-center'>Loading...</p>
+        ? <div className='space-y-5'>
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+        </div>
         : games?.map((item, index) => (
           <li key={index}>
             <GameCard 
@@ -68,12 +74,14 @@ const HomePage = () => {
               rating={item?.rating}
               released={item?.released}
               genres={item?.genres}
+              slug={item?.slug}
+              id={item?.id}
             />
             </li>
             
         ))
       }
-      <div className='text-center' ref={ref}>무한스크롤 요청</div>
+      <div className='text-center' ref={bottom}>무한스크롤 요청</div>
       </ul>
     </section>
   )
