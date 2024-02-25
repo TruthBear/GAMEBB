@@ -8,6 +8,9 @@ const DetailPage = () => {
   const [game, setGame] = useState();
   const [screenshots, setScreenshots] = useState();
   const [seeMore, setSeeMore] = useState(false);
+  // const [commentList, setCommentList] = useState();
+  const [comment, setComment] = useState('');
+  const [user, setUser] = useState('');
   const apiKey = process.env.REACT_APP_API_KEY; 
   
   useEffect(() => {
@@ -26,7 +29,7 @@ const DetailPage = () => {
     }; 
 
     fetchDetail();
-    console.log(game);
+    console.log(game)
   }, [id, apiKey]);
 
   useEffect(()=>{
@@ -47,6 +50,51 @@ const DetailPage = () => {
     screenshotsList();
   },[id, apiKey])
 
+  // useEffect(()=>{
+  //   const comments = async() => {
+  //     const url = "https://port-0-epxress-test-am952nlsjoo7f4.sel5.cloudtype.app/comment"
+  //     try {
+  //       const response = await fetch(url);
+  //       if(response.ok) {
+  //         throw new Error("Something went wrong");
+  //       } 
+  //       const data = await response.json();
+  //       setCommentList(data);
+  //       console.log(data)
+  //     }catch(error) {
+  //       console.error('Failed to fetch Comments:', error);
+  //     }
+  //   }
+  //   comments();
+    
+
+  // }, []);
+
+  //   const commentSubmit = async() => {
+  //     const url = "https://port-0-epxress-test-am952nlsjoo7f4.sel5.cloudtype.app/comment/write";
+  //     try {
+  //       const response = await fetch(url, {
+  //         method: "POST",
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           gameId: 123,
+  //           user: user,
+  //           comment: comment,
+  //         }),
+  //       });
+
+  //       if(response.ok) {
+  //         console.log("gg");
+  //       }else {
+  //         console.error("error");
+  //       }
+  //     }catch(error) {
+  //       console.error('error:', error)
+  //     }
+  //   }
+ 
 
   const clickSeeMore = () => {
     setSeeMore(!seeMore);
@@ -140,6 +188,13 @@ const DetailPage = () => {
           style={{backgroundImage : `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url("${game?.background_image}")`}}
           className='h-[300px] bg-cover bg-center'
         />
+      </div>
+      <div>
+        {/* <form onSubmit={commentSubmit}>
+          <input className='text-black' type="text" value={user} onChange={(e)=> setUser(e.target.value)}/>
+          <input className='text-black' type="text" value={comment} onChange={(e)=> setComment(e.target.value)}/>
+          <button type='submit'>댓글 작성</button>
+        </form> */}
       </div>
     </div>
   );
