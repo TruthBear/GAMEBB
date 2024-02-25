@@ -2,17 +2,29 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import PlatformIcon from '../components/common/Icon/PlatformIcon';
 import parse from 'html-react-parser';
+import { collection, getDocs, } from 'firebase/firestore/lite';
+import db from '../index';
 
 const DetailPage = () => {
   const {id} = (useLocation().state);  
   const [game, setGame] = useState();
   const [screenshots, setScreenshots] = useState();
   const [seeMore, setSeeMore] = useState(false);
+  const [comments, setComments] = useState();
   // const [commentList, setCommentList] = useState();
-  const [comment, setComment] = useState('');
-  const [user, setUser] = useState('');
   const apiKey = process.env.REACT_APP_API_KEY; 
-  
+
+  useEffect(()=>{
+    async function getAllDocuments() {
+      const colRef = collection(db, String(id));
+      const querySnapshot = await getDocs(colRef);
+      const dataList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      setComments(dataList);
+    }
+    getAllDocuments();
+  },[])
+
   useEffect(() => {
     const fetchDetail = async () => {
       const url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`;
@@ -29,7 +41,6 @@ const DetailPage = () => {
     }; 
 
     fetchDetail();
-    console.log(game)
   }, [id, apiKey]);
 
   useEffect(()=>{
@@ -50,57 +61,9 @@ const DetailPage = () => {
     screenshotsList();
   },[id, apiKey])
 
-  // useEffect(()=>{
-  //   const comments = async() => {
-  //     const url = "https://port-0-epxress-test-am952nlsjoo7f4.sel5.cloudtype.app/comment"
-  //     try {
-  //       const response = await fetch(url);
-  //       if(response.ok) {
-  //         throw new Error("Something went wrong");
-  //       } 
-  //       const data = await response.json();
-  //       setCommentList(data);
-  //       console.log(data)
-  //     }catch(error) {
-  //       console.error('Failed to fetch Comments:', error);
-  //     }
-  //   }
-  //   comments();
-    
-
-  // }, []);
-
-  //   const commentSubmit = async() => {
-  //     const url = "https://port-0-epxress-test-am952nlsjoo7f4.sel5.cloudtype.app/comment/write";
-  //     try {
-  //       const response = await fetch(url, {
-  //         method: "POST",
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           gameId: 123,
-  //           user: user,
-  //           comment: comment,
-  //         }),
-  //       });
-
-  //       if(response.ok) {
-  //         console.log("gg");
-  //       }else {
-  //         console.error("error");
-  //       }
-  //     }catch(error) {
-  //       console.error('error:', error)
-  //     }
-  //   }
- 
-
   const clickSeeMore = () => {
     setSeeMore(!seeMore);
   }
-
-
   
   return (
     <div className='relative w-full pt-28'>
@@ -182,19 +145,27 @@ const DetailPage = () => {
             </ul>
           </div>
         </div>
+        <div className='px-5'>
+          <h2 className='text-2xl'>Comments</h2>
+          <ul className='space-y-3'>
+            {
+              comments.map((item)=>(
+                <li 
+                className='bg-white bg-opacity-20 rounded-lg p-3'  
+                key={item.id}>
+                  <div className='opacity-40'>{item.username}</div>
+                  <div>{item.comment}</div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
       <div className='absolute w-full top-0 left-0 z-[-1]' style={{marginTop: "0"}}>
         <div 
           style={{backgroundImage : `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url("${game?.background_image}")`}}
           className='h-[300px] bg-cover bg-center'
         />
-      </div>
-      <div>
-        {/* <form onSubmit={commentSubmit}>
-          <input className='text-black' type="text" value={user} onChange={(e)=> setUser(e.target.value)}/>
-          <input className='text-black' type="text" value={comment} onChange={(e)=> setComment(e.target.value)}/>
-          <button type='submit'>댓글 작성</button>
-        </form> */}
       </div>
     </div>
   );

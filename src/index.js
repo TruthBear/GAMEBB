@@ -4,8 +4,7 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import router from './routing/router';
 import { initializeApp } from "firebase/app";
-import {getFirestore, collection, getDocs } from "firebase/firestore/lite";
-import { getAnalytics } from "firebase/analytics";
+import {getFirestore, } from "firebase/firestore/lite";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqyBfHsBwfXODG0fj1yEZJSTQx2YcPfoM",
@@ -18,8 +17,8 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,3 +26,6 @@ root.render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+
+export default db;
