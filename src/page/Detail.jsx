@@ -11,9 +11,9 @@ const DetailPage = () => {
   const [screenshots, setScreenshots] = useState();
   const [seeMore, setSeeMore] = useState(false);
   const [comments, setComments] = useState();
-  // const [commentList, setCommentList] = useState();
   const apiKey = process.env.REACT_APP_API_KEY; 
 
+  // 파이어베이스 조회 댓글 조회
   useEffect(()=>{
     async function getAllDocuments() {
       const colRef = collection(db, String(id));
@@ -23,7 +23,7 @@ const DetailPage = () => {
       setComments(dataList);
     }
     getAllDocuments();
-  },[])
+  },[id])
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -149,12 +149,14 @@ const DetailPage = () => {
           <h2 className='text-2xl'>Comments</h2>
           <ul className='space-y-3'>
             {
-              comments.map((item)=>(
+              comments === undefined || comments.length === 0
+              ? <p className='text-center'>댓글 없음</p> 
+              : comments?.map((item)=>(
                 <li 
                 className='bg-white bg-opacity-20 rounded-lg p-3'  
-                key={item.id}>
-                  <div className='opacity-40'>{item.username}</div>
-                  <div>{item.comment}</div>
+                key={item?.id}>
+                  <div className='opacity-40'>{item?.username}</div>
+                  <div>{item?.comment}</div>
                 </li>
               ))
             }
