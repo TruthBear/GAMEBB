@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import PlatformIcon from '../components/common/Icon/PlatformIcon';
 import parse from 'html-react-parser';
-import { collection, getDocs, } from 'firebase/firestore/lite';
+import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
 import db from '../index';
 
 const DetailPage = () => {
@@ -11,9 +11,28 @@ const DetailPage = () => {
   const [screenshots, setScreenshots] = useState();
   const [seeMore, setSeeMore] = useState(false);
   const [comments, setComments] = useState();
+  const [username, setUsername] = useState('');
+  const [comment, setComment] = useState('');
   const apiKey = process.env.REACT_APP_API_KEY; 
 
-  // 파이어베이스 조회 댓글 조회
+  // 댓글 작성
+  const writeComment = async () => {
+    try{
+      const docRef = await addDoc(collection(db, String(id)), {
+        username: username,
+        comment: comment,
+      });
+
+      setUsername('');
+      setComment('');
+
+      console.log("댓글작성 완료", docRef.id)
+    }catch (error) {
+      console.log("댓글 작성 에러")
+    }
+  }
+
+  // 댓글 조회
   useEffect(()=>{
     async function getAllDocuments() {
       const colRef = collection(db, String(id));
@@ -25,6 +44,7 @@ const DetailPage = () => {
     getAllDocuments();
   },[id])
 
+  // 게임 디테일 api
   useEffect(() => {
     const fetchDetail = async () => {
       const url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`;
@@ -145,6 +165,7 @@ const DetailPage = () => {
             </ul>
           </div>
         </div>
+        {/* Comments List */}
         <div className='px-5'>
           <h2 className='text-2xl'>Comments</h2>
           <ul className='space-y-3'>
@@ -161,6 +182,34 @@ const DetailPage = () => {
               ))
             }
           </ul>
+        </div>
+        {/* Submit Comment */}
+        <div className='px-5 w-full text-black  space-y-2'>
+          <h2 className='text-2xl text-white'>Write a comment</h2>
+          <div className='w-full bg-white rounded-lg overflow-hidden p-2'>
+            <input
+            className='w-full bg-none outline-none' 
+            type="text"
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+            placeholder='username'
+            />
+            <hr/>
+            <textarea
+            className='w-full outline-none' 
+            value={comment}
+            onChange={(e)=>setComment(e.target.value)}
+            placeholder='Comment...'
+            />
+          </div>
+          <div className='text-center bg-white p-3 rounded-lg'>
+            <button 
+            onClick={writeComment}
+            className='font-bold'
+              >
+              작성
+            </button>
+          </div>
         </div>
       </div>
       <div className='absolute w-full top-0 left-0 z-[-1]' style={{marginTop: "0"}}>
