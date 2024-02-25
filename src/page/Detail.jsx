@@ -21,8 +21,14 @@ const DetailPage = () => {
       const docRef = await addDoc(collection(db, String(id)), {
         username: username,
         comment: comment,
+        createdAt: new Date(),
       });
 
+      setComments(p => [...p, { 
+        id: docRef.id,
+        username: username,
+        comment: comment,
+         }]);
       setUsername('');
       setComment('');
 
