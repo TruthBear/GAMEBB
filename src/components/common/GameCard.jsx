@@ -11,7 +11,7 @@ const GameCard = ({background, name, platforms, rating, released, genres, slug, 
   }
   
   return (
-    <article className=' w-full overflow-hidden rounded-xl shadow-xl bg-[#151515]'>
+    <article className=' w-full overflow-hidden rounded-xl shadow-xl bg-[#202020]'>
       <div className='w-full '>
         {background === null ? "" : <img src={background} alt={`${name} preview`} />}
         
@@ -42,8 +42,6 @@ const GameCard = ({background, name, platforms, rating, released, genres, slug, 
           </button> 
         </div>
       </div>
-      
-
     </article>
   );
 }

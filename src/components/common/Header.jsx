@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header className='bg-black text-white py-3 px-5 flex justify-between items-center'>
+    <header className='bg-[#151515] text-white py-3 px-5 flex justify-between items-center'>
       <div>
-        <h1 className='text-[32px] font-bold'><Link to={'/'}>GAMEBB</Link></h1>
+        <div className='text-[32px] font-bold'><Link to={'/'}>GAMEBB</Link></div>
       </div>
       <div>
         <FaCircleUser className='text-4xl' />

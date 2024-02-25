@@ -19,7 +19,7 @@ const HomePage = () => {
       date.setMonth(date.getMonth() - 3);
       const threeMonthsAgo = date.toISOString().split('T')[0];
 
-      const url = `https://api.rawg.io/api/games?key=${apiKey}&page_size=5&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page=${page}`;
+      const url = `https://api.rawg.io/api/games?key=${apiKey}&page_size=10&dates=${threeMonthsAgo},${currentDate}&ordering=-added&page=${page}`;
 
       try {
         const response = await fetch(url);
@@ -36,16 +36,20 @@ const HomePage = () => {
 
     if(firstRun === true) {
       setFirstRun(!firstRun);
+      console.log(firstRun)
       // 최초 데이터 요청
       fetchGames();
+    } else {
+      console.log(firstRun)
+       // 무한스크롤 요청
+      if(bottomView) {
+        fetchGames();
+      }
     }
 
-    // 무한스크롤 요청
-    if(bottomView) {
-      fetchGames();
-    }
+    
 
-  }, [bottomView, page]);
+  }, [bottomView, page, firstRun]);
 
   console.log(games)
 
@@ -61,9 +65,11 @@ const HomePage = () => {
         games.length === 0
         // ? <p className='text-center'>Loading...</p>
         ? <div className='space-y-5'>
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-          <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
+          <li className='w-full h-[400px] bg-gray-400 opacity-10 rounded-lg'></li>  
+          <li className='w-full h-[400px] bg-gray-400 opacity-10 rounded-lg'></li>  
+          <li className='w-full h-[400px] bg-gray-400 opacity-10 rounded-lg'></li>  
+          <li className='w-full h-[400px] bg-gray-400 opacity-10 rounded-lg'></li>  
+          <li className='w-full h-[400px] bg-gray-400 opacity-10 rounded-lg'></li>  
         </div>
         : games?.map((item, index) => (
           <li key={index}>

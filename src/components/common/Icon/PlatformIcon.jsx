@@ -7,8 +7,6 @@ import { MdOutlinePhoneIphone } from "react-icons/md";
 
 
 const PlatformIcon = (platforms) => {
-
-
   
   const whatPlatforms = (platform) => {
     if(platform === 'pc') {

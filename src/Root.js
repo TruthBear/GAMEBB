@@ -6,7 +6,7 @@ const Root = () => {
   return (
     <>
       <AppLayout>
-        <main className='py-10'>
+        <main className='pb-10 text-white'>
           <Outlet />
         </main>
       </AppLayout>
