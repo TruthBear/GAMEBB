@@ -8,18 +8,26 @@ const HomePage = () => {
   
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState('')
   const [bottom, bottomView] = useInView();
+
+  const date = new Date();
+  const currentDate = date.toISOString().split('T')[0];
+  date.setMonth(date.getMonth() - 3);
+  const threeMonthsAgo = date.toISOString().split('T')[0];
+  const latestPopular = `dates=${threeMonthsAgo},${currentDate}&ordering=-added`
+
+  const filterChange = (e) => {
+    setFilter(e.target.value);
+    setPage(1);
+    setGames([]);
+  }
 
   useEffect(() => {
     const fetchGames = async () => {
       const apiKey = process.env.REACT_APP_API_KEY; 
-      const date = new Date();
-      const currentDate = date.toISOString().split('T')[0];
-      date.setMonth(date.getMonth() - 3);
-      const threeMonthsAgo = date.toISOString().split('T')[0];
-
-      const url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&page_size=5&dates=${threeMonthsAgo},${currentDate}&ordering=-added`;
-
+      const url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&page_size=5&${filter}`;
+      
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -38,7 +46,8 @@ const HomePage = () => {
       fetchGames();
     }
 
-  }, [bottomView, page, games]);
+
+  }, [bottomView, page, games, filter]);
 
 
   
@@ -48,7 +57,10 @@ const HomePage = () => {
 
   return (
     <section className='px-5 pb-10'>
-      <div></div>
+      <select className='bg-black outline-none' value={filter} onChange={filterChange}>
+        <option value=" ">Most-reviewed</option>
+        <option value={latestPopular}>Latest-popular</option>
+      </select>
       <ul className='space-y-5 flex flex-col'>
       {
         games.length === 0

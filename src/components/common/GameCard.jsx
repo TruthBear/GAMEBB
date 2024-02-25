@@ -28,7 +28,7 @@ const GameCard = ({background, name, platforms, rating, released, genres, slug, 
                 <div className='flex flex-row justify-between items-center py-2 border-b-[1px] border-white border-opacity-15 text-sm '><div className='text-white text-opacity-40'>Genres:</div><div className='text-xs'>{genres.map((item,index)=> <span  key={index}>{item.name} </span>)}</div></div>
               </div>
               <div className='flex justify-center'>
-                <div className='bg-white bg-opacity-25 p-2 rounded-lg font-bold '><Link to={`/detail/${slug}`} state={{"id": id}}>See More Detail</Link></div>
+                <div className=''><Link to={`/detail/${slug}`} state={{"id": id}} className='bg-white bg-opacity-25 p-3 rounded-lg font-bold ' >See More Detail</Link></div>
               </div>
             </div>
         }
