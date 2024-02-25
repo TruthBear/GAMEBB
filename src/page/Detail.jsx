@@ -208,10 +208,10 @@ const DetailPage = () => {
             placeholder='Comment...'
             />
           </div>
-          <div className='text-center bg-white p-3 rounded-lg'>
+          <div className='text-center '>
             <button 
             onClick={writeComment}
-            className='font-bold'
+            className='font-bold bg-white w-full p-3 rounded-lg'
               >
               작성
             </button>
