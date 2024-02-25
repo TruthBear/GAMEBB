@@ -92,12 +92,12 @@ const DetailPage = () => {
   }
   
   return (
-    <div className='relative w-full pt-28'>
-      <div className='w-full space-y-3'>
+    <div className='relative w-full pt-28 md:pt-[300px] lg:pt-[600px]'>
+      <div className='w-full space-y-3 flex flex-col items-center'>
         {/* title */}
         <h1 className='text-white text-4xl px-5 text-center font-bold'>{game?.name}</h1>
         {/* game_head */}
-        <div className='flex space-x-5 justify-center px-5'>
+        <div className='flex space-x-5 justify-center px-5 '>
           {/* released */}
           <div className='bg-white text-black font-bold rounded-md px-2 text-sm' >{game?.released}</div>
           {/* platforms */}
@@ -121,7 +121,7 @@ const DetailPage = () => {
           </ul>
         </div>
         {/* about */}
-        <div className='px-5 pb-10'>
+        <div className='px-5 pb-10 md:w-3/4 lg:w-3/5'>
           <h2 className='text-2xl'>About</h2>
           <div className={`text-sm space-y-2 ${seeMore === false ? "line-clamp-4" : ""}`}>
             {game && parse(game?.description)}
@@ -133,7 +133,7 @@ const DetailPage = () => {
           </div>
         </div>
         {/* info block*/}
-        <div className='px-5 grid grid-cols-2 gap-y-3 gap-x-1'>
+        <div className='px-5 md:w-3/4 lg:w-3/5 grid grid-cols-2 gap-y-3 gap-x-1 '>
           {/* Platforms */}
           <div>
             <h2 className='opacity-40' >Platforms</h2>
@@ -172,7 +172,7 @@ const DetailPage = () => {
           </div>
         </div>
         {/* Comments List */}
-        <div className='px-5'>
+        <div className='px-5 md:w-3/4 lg:w-3/5'>
           <h2 className='text-2xl'>Comments</h2>
           <ul className='space-y-3'>
             {
@@ -190,7 +190,7 @@ const DetailPage = () => {
           </ul>
         </div>
         {/* Submit Comment */}
-        <div className='px-5 w-full text-black  space-y-2'>
+        <div className='px-5 w-full text-black space-y-2 md:w-3/4 lg:w-3/5'>
           <h2 className='text-2xl text-white'>Write a comment</h2>
           <div className='w-full bg-white rounded-lg overflow-hidden p-2'>
             <input
@@ -221,7 +221,7 @@ const DetailPage = () => {
       <div className='absolute w-full top-0 left-0 z-[-1]' style={{marginTop: "0"}}>
         <div 
           style={{backgroundImage : `linear-gradient(rgba(15, 15, 15, 0), rgb(21, 21, 21)), linear-gradient(rgba(21, 21, 21, 0.8), rgba(21, 21, 21, 0.5)), url("${game?.background_image}")`}}
-          className='h-[300px] bg-cover bg-center'
+          className='h-[300px] bg-cover bg-center md:h-[500px] lg:h-screen'
         />
       </div>
     </div>

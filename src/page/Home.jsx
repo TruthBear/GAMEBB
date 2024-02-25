@@ -47,13 +47,7 @@ const HomePage = () => {
     }
 
 
-  }, [bottomView, page, games, filter]);
-
-
-  
-
-  // <li className='w-full h-[400px] bg-black bg-opacity-10 rounded-lg'></li> 
-  
+  }, [bottomView, page, games, filter]);  
 
   return (
     <section className='px-5 pb-10'>
@@ -61,13 +55,12 @@ const HomePage = () => {
         <option value=" ">Most-reviewed</option>
         <option value={latestPopular}>Latest-popular</option>
       </select>
-      <ul className='space-y-5 flex flex-col'>
+      <ul className='space-y-5 flex flex-col items-center gap-4 md:justify-center md:flex-wrap md:flex-row'>
       {
         games.length === 0
-        // ? <p className='text-center'>Loading...</p>
         ? ""
         : games?.map((item, index) => (
-          <li key={index}>
+          <li key={index} className=' max-w-[400px]'>
             <GameCard 
               background={item?.background_image} 
               name={item?.name} 
@@ -82,10 +75,10 @@ const HomePage = () => {
             
         ))
       }
-      <div className='text-center' ref={bottom}>
+      </ul>
+      <div className='text-center mt-5' ref={bottom}>
         <MoonLoader color="white" />
       </div>
-      </ul>
     </section>
   )
 }

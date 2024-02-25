@@ -13,7 +13,7 @@ const GameCard = ({background, name, platforms, rating, released, genres, slug, 
   return (
     <article className=' w-full overflow-hidden rounded-xl shadow-xl bg-[#202020]'>
       <div className='w-full '>
-        {background === null ? "" : <img src={background} alt={`${name} preview`} />}
+        {background === null ? "" : <img src={background} alt={`${name} preview`} className='w-full object-cover object-center' />}
         
       </div>
       <div className=' text-white w-full p-5 space-y-1 flex flex-col'>
