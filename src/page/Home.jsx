@@ -50,17 +50,17 @@ const HomePage = () => {
   }, [bottomView, page, games, filter]);  
 
   return (
-    <section className='px-5 pb-10'>
+    <section className='px-5 pb-10 rel'>
       <select className='bg-black outline-none' value={filter} onChange={filterChange}>
         <option value=" ">Most-reviewed</option>
         <option value={latestPopular}>Latest-popular</option>
       </select>
-      <ul className='space-y-5 flex flex-col items-center gap-4 md:justify-center md:flex-wrap md:flex-row'>
+      <ul className='flex flex-col items-center gap-10 md:justify-center md:flex-wrap md:flex-row'>
       {
         games.length === 0
         ? ""
         : games?.map((item, index) => (
-          <li key={index} className=' max-w-[400px]'>
+          <li key={index} className='max-w-[300px] hover:relative h-[350px]'>
             <GameCard 
               background={item?.background_image} 
               name={item?.name} 

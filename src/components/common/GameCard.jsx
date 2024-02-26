@@ -9,7 +9,7 @@ const GameCard = ({background, name, platforms, rating, released, genres, slug, 
   const showMoreInfo = () => {
     setViewMore(!viewMore);
   }
-  
+
   return (
     <article className=' w-full overflow-hidden rounded-xl shadow-xl bg-[#202020]'>
       <div className='w-full '>
