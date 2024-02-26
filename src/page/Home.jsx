@@ -26,7 +26,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const apiKey = process.env.REACT_APP_API_KEY; 
-      const url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&page_size=5&${filter}`;
+      const url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&page_size=20&${filter}`;
       
       try {
         const response = await fetch(url);
@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
     <section className='px-5 pb-10 rel'>
-      <select className='bg-black outline-none' value={filter} onChange={filterChange}>
+      <select className='bg-black outline-none mb-5' value={filter} onChange={filterChange}>
         <option value=" ">Most-reviewed</option>
         <option value={latestPopular}>Latest-popular</option>
       </select>
@@ -60,7 +60,7 @@ const HomePage = () => {
         games.length === 0
         ? ""
         : games?.map((item, index) => (
-          <li key={index} className='max-w-[300px] hover:relative h-[350px]'>
+          <li key={index} className='max-w-[300px] hover:relative md:h-[350px]'>
             <GameCard 
               background={item?.background_image} 
               name={item?.name} 
