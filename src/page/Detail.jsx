@@ -172,7 +172,7 @@ const DetailPage = () => {
           </div>
         </div>
         {/* Comments List */}
-        <div className='px-5 md:w-3/4 lg:w-3/5'>
+        <div className='w-full px-5 md:w-3/4 lg:w-3/5'>
           <h2 className='text-2xl'>Comments</h2>
           <ul className='space-y-3'>
             {
